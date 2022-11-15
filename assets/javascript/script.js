@@ -21,7 +21,7 @@ function addTimeBlocks() {
     nextRow.attr("class", "row");
     var infoBlock = $("<p>");
     infoBlock.attr("class", "hour");
-    infoBlock.attr("class", "col-md-1");
+    infoBlock.attr("class", "col-md-1 time-block");
     infoBlock.text(
       moment()
         .hour(i + 8)
@@ -30,9 +30,7 @@ function addTimeBlocks() {
     nextRow.append(infoBlock);
     timeBlockContainer.append(nextRow);
     var nextTextRow = $("<input>");
-    nextTextRow.attr("class", "textarea");
-    nextTextRow.attr("class", "description");
-    nextTextRow.attr("class", "col-md-10");
+    nextTextRow.attr("class", "textarea description col-md-10");
     nextTextRow.attr(
       "id",
       `${moment()
@@ -45,26 +43,47 @@ function addTimeBlocks() {
     var nextRowBtnIcn = $("<i>");
     nextRowBtnIcn.attr("class", "fas fa-save");
     nextRowBtn.append(nextRowBtnIcn);
-    nextRow.append(nextRowBtn);
     nextRow.append(nextTextRow);
+    nextRow.append(nextRowBtn);
   }
   $(".saveBtn").click(function () {
     //console.log($(this));
-    console.log();
     var hrInput = $(this).parent().children("input")[0];
-    localStorage.setItem(hrInput, element.val());
-
-    // for (let i = 0; i < 10; i++) {
-    //   var inputId = `${moment()
-    //     .hour(i + 8)
-    //     .format("hA")}`;
-    //   var element = $(`#${inputId}`);
-    //
-    //   console.log("InputId:", inputId);
-    //   console.log("elementVal:", element.val());
-    //   $("#8AM").val(localStorage.getItem("8AM"));
-    // }
+    localStorage.setItem(hrInput.id, $(hrInput).val());
   });
+}
+
+//setInterval(function () {
+function timeSchedule() {
+  var inputs = $(".textarea");
+  var currentHour = moment().format("hA");
+  console.log(currentHour);
+  console.log(inputs[0].id);
+  for (var i = 0; i < inputs.length; i++) {
+    console.log(inputs[i].id);
+    // console.log(toString(inputs[i].attr(id)));
+    console.log(currentHour);
+    var inputString = toString(inputs[i].id);
+    if (currentHour.includes("AM")) {
+      if (inputString < currentHour) {
+        inputs.addClass("past");
+      } else if (inputString == currentHour) {
+        inputs.addClass("present");
+      } else {
+        inputs.addClass("future");
+      }
+    } else {
+      if (inputString < currentHour) {
+        inputs.addClass("past");
+      } else if (inputString == currentHour) {
+        inputs.addClass("present");
+      } else {
+        inputs.addClass("future");
+      }
+    }
+  }
 }
 addTimeBlocks();
 pageLoad();
+timeSchedule();
+// }, 2000);

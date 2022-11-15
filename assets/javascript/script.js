@@ -60,9 +60,9 @@ function timeSchedule() {
   console.log(currentHour);
   console.log(inputs[0].id);
   for (var i = 0; i < inputs.length; i++) {
-    console.log(inputs[i].id);
     // console.log(toString(inputs[i].attr(id)));
-    console.log(currentHour);
+    console.log("the current hour is : " + currentHour);
+    console.log("The hour within the loop is : " + inputs[i].id);
     var inputString = toString(inputs[i].id);
     if (currentHour.includes("AM")) {
       if (inputString < currentHour) {
